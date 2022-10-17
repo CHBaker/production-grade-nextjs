@@ -4,34 +4,35 @@ import Container from '../components/container'
 import Hero from '../components/hero'
 import HomeNav from '../components/homeNav'
 import FeatureSection from '../components/featureSection'
+import { home } from '../content'
 
 const Home: FC<{ content: { hero: any; features: any[] } }> = ({ content }) => {
-  return (
-    <Pane>
-      <header>
-        <HomeNav />
-        <Container>
-          <Hero content={content.hero} />
-        </Container>
-      </header>
-      <main>
-        {content.features.map((feature, i) => (
-          <FeatureSection
-            key={feature.title}
-            title={feature.title}
-            body={feature.body}
-            image="/docs.png"
-            invert={i % 2 === 0}
-          />
-        ))}
-      </main>
-      <footer>
-        <Pane background="overlay" paddingY={majorScale(9)}>
-          <Container>hello</Container>
+    return (
+        <Pane>
+            <header>
+                <HomeNav />
+                <Container>
+                    <Hero content={content.hero} />
+                </Container>
+            </header>
+            <main>
+                {content.features.map((feature, i) => (
+                    <FeatureSection
+                        key={feature.title}
+                        title={feature.title}
+                        body={feature.body}
+                        image="/docs.png"
+                        invert={i % 2 === 0}
+                    />
+                ))}
+            </main>
+            <footer>
+                <Pane background="overlay" paddingY={majorScale(9)}>
+                    <Container>hello</Container>
+                </Pane>
+            </footer>
         </Pane>
-      </footer>
-    </Pane>
-  )
+    )
 }
 
 /**
@@ -39,10 +40,18 @@ const Home: FC<{ content: { hero: any; features: any[] } }> = ({ content }) => {
  */
 
 Home.defaultProps = {
-  content: {
-    features: [{ title: 'default feature', body: 'default body' }],
-    hero: { title: 'default title', body: 'default body' },
-  },
+    content: {
+        features: [{ title: 'default feature', body: 'default body' }],
+        hero: { title: 'default title', body: 'default body' },
+    },
+}
+
+export function getStaticProps(ctx) {
+    return {
+        props: {
+            content: ctx.preview ? home.draft : home.published,
+        },
+    }
 }
 
 export default Home
