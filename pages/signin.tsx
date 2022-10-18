@@ -11,10 +11,7 @@ const Signin = () => {
     const router = useRouter()
 
     useEffect(() => {
-        console.log(session, loading)
         if (session) {
-            console.log('session')
-
             router.push('/app')
         }
     }, [session, router])
